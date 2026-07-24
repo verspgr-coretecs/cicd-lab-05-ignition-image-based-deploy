@@ -349,7 +349,7 @@ body{
     <div class="tf-col reveal" data-step="1">
       <div class="tf-file">
         <div class="fh">Dockerfile · committed to Git</div>
-        <pre>FROM ignition:8.3.6
+        <pre>FROM ignition:8.3.8
 COPY services/config/ <span class="cm">…</span>
 COPY projects/        <span class="cm">…</span></pre>
       </div>
@@ -358,7 +358,7 @@ COPY projects/        <span class="cm">…</span></pre>
     <div class="tf-arr reveal" data-step="2"><div class="a">→</div><div class="t">docker build</div></div>
     <div class="tf-col reveal" data-step="2">
       <div class="tf-stack">
-        <div class="tf-layer base">ignition:8.3.6 base</div>
+        <div class="tf-layer base">ignition:8.3.8 base</div>
         <div class="tf-layer">layer: services/config/</div>
         <div class="tf-layer">layer: projects/</div>
       </div>
@@ -369,7 +369,7 @@ COPY projects/        <span class="cm">…</span></pre>
       <div class="tf-box reveal" data-step="3">
         <div class="bh"><span class="run"></span>container · lab05-ignition-test</div>
         <div class="tf-stack">
-          <div class="tf-layer base">ignition:8.3.6 base</div>
+          <div class="tf-layer base">ignition:8.3.8 base</div>
           <div class="tf-layer">layer: services/config/</div>
           <div class="tf-layer">layer: projects/</div>
           <div class="tf-layer rw">writable layer · runtime state</div>
@@ -410,7 +410,7 @@ COPY projects/        <span class="cm">…</span></pre>
 
     <div class="split">
       <div class="code"><pre><span class="cm"># pin the base: bump deliberately, never float :latest</span>
-ARG IGNITION_VERSION=<span class="hl">8.3.6</span>
+ARG IGNITION_VERSION=<span class="hl">8.3.8</span>
 FROM inductiveautomation/ignition:${IGNITION_VERSION}
 
 <span class="cm"># bake the deployable state: least to most volatile</span>
@@ -457,7 +457,7 @@ LABEL org.opencontainers.image.revision=<span class="hl">"${GIT_SHA}"</span></pr
   <div class="lstack-wrap">
     <div class="lstack" id="lstack">
       <!-- column-reverse: first child renders at the BOTTOM of the stack -->
-      <div class="layer base" data-l="base"><span class="lname">FROM inductiveautomation/ignition:8.3.6</span><span class="badge">CACHED</span><span class="ldesc">the base, biggest layer by far</span></div>
+      <div class="layer base" data-l="base"><span class="lname">FROM inductiveautomation/ignition:8.3.8</span><span class="badge">CACHED</span><span class="ldesc">the base, biggest layer by far</span></div>
       <div class="layer" data-l="modl"><span class="lname">COPY third-party-modules/</span><span class="badge">CACHED</span><span class="ldesc">big .modl binaries · rarely change</span></div>
       <div class="layer" data-l="mjson"><span class="lname">COPY services/modules.json</span><span class="badge">CACHED</span><span class="ldesc">module enablement manifest</span></div>
       <div class="layer" data-l="cfg"><span class="lname">COPY services/config/</span><span class="badge">CACHED</span><span class="ldesc">gateway config</span></div>
@@ -907,7 +907,7 @@ function bindControls(slideEl,ctrl){
   const lead=slide.querySelector('#tri-step');
   const texts=['Three words, one flow. Step through how they relate.',
     '<b>The Dockerfile</b> is a committed text file: start FROM a base image, COPY our files in. It describes the image; it never runs.',
-    '<b>docker build</b> executes the recipe: every instruction becomes a read-only <b>layer</b>. The result is the image: a frozen filesystem snapshot plus metadata. <b>inductiveautomation/ignition:8.3.6</b> is one: the whole gateway install, frozen.',
+    '<b>docker build</b> executes the recipe: every instruction becomes a read-only <b>layer</b>. The result is the image: a frozen filesystem snapshot plus metadata. <b>inductiveautomation/ignition:8.3.8</b> is one: the whole gateway install, frozen.',
     '<b>docker run</b> starts a <b>container</b>: the image\'s layers, read-only, plus one thin <b>writable layer</b> for everything the process writes at runtime. This is what every compose since Lab 02 has done.',
     'One image can run <b>many containers</b>, each with its own writable layer. Delete a container and only that layer dies: <b>the image is untouched</b>, ready to start a fresh copy. That is why replacing the container can be a deploy.'];
   controllers.tri={max:4,render(s){ items.forEach(it=>it.classList.toggle('show',+it.dataset.step<=s)); lead.innerHTML=texts[s]; }};

@@ -23,7 +23,7 @@
 # enter the build or the image.
 
 # Pin the base image. Bump deliberately, not by floating `latest`.
-ARG IGNITION_VERSION=8.3.6
+ARG IGNITION_VERSION=8.3.8
 FROM inductiveautomation/ignition:${IGNITION_VERSION}
 
 # Where the gateway keeps its runtime state inside the container.

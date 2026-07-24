@@ -18,7 +18,7 @@ Everything else in the repo — docs, scripts, `.github/`, `.env` — is kept ou
 ## The base image
 
 ```dockerfile
-ARG IGNITION_VERSION=8.3.6
+ARG IGNITION_VERSION=8.3.8
 FROM inductiveautomation/ignition:${IGNITION_VERSION}
 ```
 

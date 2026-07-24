@@ -165,7 +165,7 @@ You're finished with part 1 when:
 ## Debrief (10 min)
 
 - The image is immutable, but the gateway still writes runtime state (internal DB, logs) at `data/`. Where does that go in our test/production setup, and why is it safe to throw away on each deploy? (Hint: look at what's *not* a volume in `docker-compose.yaml`, and where historian data lives.)
-- We pin `inductiveautomation/ignition:8.3.6`, not `:latest`. Why does an immutable-artifact philosophy demand a pinned base?
+- We pin `inductiveautomation/ignition:8.3.8`, not `:latest`. Why does an immutable-artifact philosophy demand a pinned base?
 - Lab 04's `.deployignore` was read by a shell loop in the workflow; Lab 05's `.dockerignore` is read by the Docker daemon. What does moving that responsibility *into the tool* buy you?
 - In part 2 this image gets deployed — and in a real pipeline it would go through a registry first. What's the one tag you'd never want to deploy to production by name, and why? (Foreshadow: moving vs. immutable tags.)
 

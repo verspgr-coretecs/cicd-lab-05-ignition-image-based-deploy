@@ -121,7 +121,7 @@ docker buildx imagetools inspect ghcr.io/<your-fork-owner>/cicd-lab-05-ignition:
   ```bash
   docker inspect -f '{{.Config.Image}}' lab05-ignition-test
   ```
-  If it still shows `inductiveautomation/ignition:8.3.6`, the deploy didn't recreate it — the
+  If it still shows `inductiveautomation/ignition:8.3.8`, the deploy didn't recreate it — the
   `IGNITION_TEST_IMAGE` override wasn't set. Re-run the deploy, or locally:
   `scripts/deploy-image.sh test <image>`.
 - **Stale moving tag.** If you deployed `:test` by name and it didn't change, remember moving tags can

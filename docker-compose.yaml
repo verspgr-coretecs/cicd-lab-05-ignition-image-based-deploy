@@ -95,7 +95,7 @@ services:
   # on the host show up immediately. This is where you DEVELOP (file-based); the
   # image you ship to test/production is built from these same files.
   ignition-local:
-    image: inductiveautomation/ignition:8.3.6
+    image: inductiveautomation/ignition:8.3.8
     container_name: lab05-ignition-local
     hostname: lab05-ignition-local
     # Keep the image's own identity (uid 2003, gid 0): its data/ tree is
@@ -147,7 +147,7 @@ services:
   # Before the first build, it falls back to the base image so the stack still
   # comes up (an empty gateway, just like Lab 04's test started empty).
   ignition-test:
-    image: "${IGNITION_TEST_IMAGE:-inductiveautomation/ignition:8.3.6}"
+    image: "${IGNITION_TEST_IMAGE:-inductiveautomation/ignition:8.3.8}"
     container_name: lab05-ignition-test
     hostname: lab05-ignition-test
     # Keep the image's own identity (uid 2003, gid 0): its data/ tree is
@@ -189,7 +189,7 @@ services:
   # Same shape as test. release.yml sets IGNITION_PRODUCTION_IMAGE to the image that was
   # already tested on the test gateway (re-tagged, NOT rebuilt) and recreates this container.
   ignition-production:
-    image: "${IGNITION_PRODUCTION_IMAGE:-inductiveautomation/ignition:8.3.6}"
+    image: "${IGNITION_PRODUCTION_IMAGE:-inductiveautomation/ignition:8.3.8}"
     container_name: lab05-ignition-production
     hostname: lab05-ignition-production
     # Keep the image's own identity (uid 2003, gid 0): its data/ tree is
