@@ -131,6 +131,12 @@ pf_persist_lab_gid
 # and get their token docker-cp'ed in after boot (install-api-token.sh, in
 # the repair step below and after every deploy-image.sh run).
 "$SCRIPT_DIR/generate-api-keys.sh"
+# The token resource written just above is born AFTER lab_preflight's chmod
+# pass, which "only touches dirs that exist" — so on a fresh clone it gets the
+# student's umask (typically 022: no group write) and the LOCAL gateway
+# (uid 2003, writing via the student's group) cannot rewrite it. Re-apply the
+# bind-mount permissions now that it exists.
+pf_prepare_bind_mounts
 
 # ---- Stale-volume detection (identity/volume desync) -----------------------
 # The LOCAL gateway's internal identity (user-source/default, identity-
