@@ -27,6 +27,11 @@
 # (re)written when its hash does not match the key. .env is the single source
 # of truth — every token is re-derivable from it at any time.
 #
+# Finally, the same keys are mirrored into .flint/tokens/<env>-api.json for
+# the Flint VS Code extension (dotenv format, gitignored per-clone), so the
+# extension's resource tree, search and script debugger work from a fresh
+# clone with no gateway UI detour.
+#
 # Usage:
 #   scripts/generate-api-keys.sh          # normally invoked by setup.sh
 
@@ -148,4 +153,28 @@ for gw, config_dir in GATEWAYS.items():
 if env_changed:
     with open(env_path, "w") as f:
         f.write(env_text)
+
+# Flint (the Ignition VS Code extension) reads the same gateway API key from
+# its own token file, one per environment in flint.config.json. Derive them
+# from the keys above so a fresh clone gets a working extension — resource
+# tree, search and the script debugger — straight out of scripts/setup.sh,
+# with no gateway UI detour. Format is dotenv, not JSON, despite the
+# extension's .json path. .flint/tokens/* is gitignored: these are live
+# credentials and are per-clone, exactly like .env.
+flint_dir = os.path.join(root, ".flint", "tokens")
+for gw in GATEWAYS:
+    m = re.search(rf"^[ \t]*IGNITION_API_KEY_{gw}=(.*)$", env_text, re.M)
+    if not m:
+        continue
+    key = m.group(1).strip().strip("\"'")
+    if is_placeholder(key):
+        continue
+    dest = os.path.join(flint_dir, f"{gw.lower()}-api.json")
+    desired = f"ignition_token={key}\n"
+    if os.path.isfile(dest) and open(dest).read() == desired:
+        continue
+    os.makedirs(flint_dir, exist_ok=True)
+    with open(dest, "w") as f:
+        f.write(desired)
+    print(f"  {gw.lower()}: wrote Flint token -> .flint/tokens/{gw.lower()}-api.json")
 PYEOF
