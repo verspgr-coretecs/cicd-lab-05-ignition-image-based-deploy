@@ -151,5 +151,11 @@
     "onStartup": "enabled",
     "certFingerprint": "003f467208c9abf8b178960c01e102bb76a9cc98",
     "licenseAgreementHash": 106690219
+  },
+  "dev.bwdesigngroup.flint.FlintDesignerBridge": {
+    "filename": "/third-party-modules/Flint-Designer-Bridge-1.2.0-8.3.modl",
+    "onStartup": "enabled",
+    "certFingerprint": "7eeb95841827f50c0b617e2a33f4cb26df7e8a12",
+    "licenseAgreementHash": 2550198668
   }
 }

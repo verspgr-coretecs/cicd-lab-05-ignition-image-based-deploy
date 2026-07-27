@@ -54,17 +54,20 @@ x-ignition-env: &ignition-env
     com.mussonindustrial.embr.charts,
     com.mussonindustrial.embr.periscope,
     com.mustry.historian.timescaledb,
-    com.cirruslink.mqtt.engine.gateway
+    com.cirruslink.mqtt.engine.gateway,
+    dev.bwdesigngroup.flint.FlintDesignerBridge
   ACCEPT_MODULE_LICENSES: >-
     com.mussonindustrial.embr.charts,
     com.mussonindustrial.embr.periscope,
     com.mustry.historian.timescaledb,
-    com.cirruslink.mqtt.engine.gateway
+    com.cirruslink.mqtt.engine.gateway,
+    dev.bwdesigngroup.flint.FlintDesignerBridge
   ACCEPT_MODULE_CERTS: >-
     com.mussonindustrial.embr.charts,
     com.mussonindustrial.embr.periscope,
     com.mustry.historian.timescaledb,
-    com.cirruslink.mqtt.engine.gateway
+    com.cirruslink.mqtt.engine.gateway,
+    dev.bwdesigngroup.flint.FlintDesignerBridge
   GATEWAY_RESTORE_DISABLED: "true"
   GATEWAY_NETWORK_ENABLED: "true"
   TZ: "Europe/Brussels"
