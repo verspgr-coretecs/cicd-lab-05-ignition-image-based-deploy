@@ -48,6 +48,11 @@ if [ "$REMOVE_VOLUMES" = "true" ]; then
   rm -rf "$PROJECT_ROOT/services/config/resources/core/ignition/user-source/default" \
          "$PROJECT_ROOT/services/config/resources/core/ignition/user-source/opcua-module" \
          "$PROJECT_ROOT/services/config/resources/core/ignition/identity-provider/default"
+  # ...including any temp_N profile a previous boot invented (see setup.sh's
+  # heal_temp_identity): leaving it behind hands the next commissioning the
+  # same stale files this block exists to remove.
+  rm -rf "$PROJECT_ROOT/services/config/resources/core/ignition/user-source/"temp* \
+         "$PROJECT_ROOT/services/config/resources/core/ignition/identity-provider/"temp*
 else
   echo -e "${GREEN}Stopping stack (volumes retained)...${NC}"
   docker compose down

@@ -110,6 +110,23 @@ jobs:
           [ "$fail" -eq 0 ] && echo ".dockerignore exclusions look fine."
           exit $fail
 
+      - name: security-properties names a deployable identity
+        # This file is tracked, so whatever it names must exist on every gateway
+        # that reads it. Commissioning rewrites it to a throwaway temp_N profile
+        # when it runs with identity files that outlived their data volume, and
+        # that profile exists on exactly one machine. Cheap check, because the
+        # failure mode is a locked-out gateway.
+        run: |
+          set -euo pipefail
+          f=services/config/resources/core/ignition/security-properties/config.json
+          [ -f "$f" ] || { echo "No $f — nothing to validate"; exit 0; }
+          bad="$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); print(" ".join(sorted({v for k,v in d.items() if k in ("systemAuthProfile","systemIdentityProvider") and str(v).startswith("temp")})))' "$f")"
+          if [ -n "$bad" ]; then
+            echo "::error file=$f::Points at a throwaway identity ($bad). Restore it (git checkout -- $f), remove services/config/resources/core/ignition/{user-source,identity-provider}/temp*, or re-run scripts/setup.sh"
+            exit 1
+          fi
+          echo "security-properties names a deployable identity."
+
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15

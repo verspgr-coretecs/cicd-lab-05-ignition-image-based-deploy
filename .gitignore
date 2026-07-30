@@ -45,6 +45,11 @@ venv/
 **/config/resources/core/ignition/user-source/default/
 **/config/resources/core/ignition/user-source/opcua-module/
 **/config/resources/core/ignition/identity-provider/default/
+# ...and the temp_N identity commissioning invents when it runs with identity
+# files that outlived their data volume (scripts/setup.sh repairs that). Same
+# admin hash, same lockout, so it is never committed either.
+**/config/resources/core/ignition/user-source/temp*/
+**/config/resources/core/ignition/identity-provider/temp*/
 
 # Ignition operational state — never commit these (see docs/ignition-file-structure.md)
 # These live inside the gateway's data/ directory at runtime; we mount them as a named
