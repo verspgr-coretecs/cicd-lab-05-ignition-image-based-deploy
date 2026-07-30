@@ -9,7 +9,11 @@
 # (timestamps, signatures) are undone with scripts/clean-ignition-resource-churn.sh
 # and hidden from diffs by the textconv driver setup.sh configures.
 #
-# Sourced from post-merge, post-checkout, and post-rewrite hooks.
+# Run by the post-checkout hook, and once directly by scripts/setup.sh (a fresh
+# clone has no skip-worktree bits, and hooks are not cloned, so post-checkout
+# cannot fire on clone). Git preserves the bit across merge, rebase, amend,
+# reset --hard and stash; it is only lost when the file leaves the index and
+# comes back, so checkout is the only event worth hooking.
 #
 # To intentionally update the machine-local seed file:
 #   git update-index --no-skip-worktree <path>

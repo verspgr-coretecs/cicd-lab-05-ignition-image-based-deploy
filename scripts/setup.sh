@@ -82,10 +82,24 @@ install_git_hooks() {
     local source_dir="$PROJECT_ROOT/scripts/git-hooks"
     [ -d "$source_dir" ] || return 0
     mkdir -p "$repo_hooks_dir"
-    for hook in post-merge post-checkout post-rewrite; do
-        local target="$repo_hooks_dir/$hook"
-        ln -sf "$source_dir/$hook" "$target"
+    # Clones set up before post-merge/post-rewrite were dropped still have
+    # symlinks to the deleted files; git errors on every merge/rebase until
+    # they are removed.
+    for stale in post-merge post-rewrite; do
+        local link="$repo_hooks_dir/$stale"
+        if [ -L "$link" ] && [ ! -e "$link" ]; then
+            rm -f "$link"
+        fi
     done
+    # post-checkout only. Git keeps the skip-worktree bit across merge, rebase,
+    # amend, reset --hard and stash, so hooks on those events had nothing to do.
+    # The bit is only lost when the file leaves the index and comes back, which
+    # is a checkout.
+    ln -sf "$source_dir/post-checkout" "$repo_hooks_dir/post-checkout"
+    # pre-commit reverts junk-only resource.json rewrites. The textconv driver
+    # below only hides them from `git diff`; without this hook they are
+    # invisible on screen and still committed.
+    ln -sf "$source_dir/pre-commit" "$repo_hooks_dir/pre-commit"
     if [ -x "$source_dir/skip-worktree-ignition-resources" ]; then
         "$source_dir/skip-worktree-ignition-resources" || true
     fi

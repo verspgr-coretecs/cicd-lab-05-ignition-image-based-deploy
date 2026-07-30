@@ -6,6 +6,9 @@ Day 3 of the [CI/CD for Ignition Masterclass](https://github.com/mustry-academy/
 
 This is the companion to [Lab 04 (file-based deploy)](https://github.com/mustry-academy/cicd-lab-04-ignition-file-based-deploy). There you `docker cp`-ed files into a *running* gateway and triggered a hot scan — fast, great for daily project iteration, but it couldn't touch modules (a scan can't enable/disable them) and gave you no versioned, rollback-able artifact. Image-based deploy is the other half: the deployable state becomes an immutable image. Most mature Ignition workflows use **both** — file-based for the inner loop, image-based for releases.
 
+
+> **How resource.json stays clean:** Ignition restamps these manifests constantly. [`docs/resource-json-hygiene.html`](./docs/resource-json-hygiene.html) explains what the junk is, the two tools that deal with it, and why an empty `git diff` does not mean a clean file.
+
 ## What changes from Lab 04
 
 | | Lab 04 (file-based) | Lab 05 (image-based) |

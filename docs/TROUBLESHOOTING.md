@@ -162,7 +162,8 @@ scripts/clean-ignition-resource-churn.sh          # dry run: lists volatile-only
 scripts/clean-ignition-resource-churn.sh --apply  # restores them from HEAD
 ```
 
-Files with real content changes (and anything staged) are never touched by the script.
+Junk-only rewrites are reverted whether or not you already staged them. Files with real content
+changes are never touched by the script.
 `git diff` already hides the volatile metadata via a textconv driver wired by `scripts/setup.sh`;
 re-run it if diffs still show timestamp/signature noise. Only the machine-local
 `local-system-properties/config.json` stays `skip-worktree` (the hooks re-apply it).
@@ -176,3 +177,8 @@ scripts/build-image.sh   # confirm the image actually builds
 
 Still stuck? The instructor answer key ([lab-key.md](../instructor-notes/lab-key.md)) has deeper
 failure-mode walkthroughs.
+
+
+## Why resource.json keeps changing on its own
+
+See [`resource-json-hygiene.html`](./resource-json-hygiene.html) for the full picture: what the junk fields are, the difference between hiding them and reverting them, and why an empty `git diff` does not mean the file on disk is clean.
